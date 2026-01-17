@@ -109,8 +109,8 @@ class VectorSearch:
                 if isinstance(row['metadata'], str):
                     try:
                         row['metadata'] = json.loads(row['metadata'])
-                    except:
-                        pass
+                    except json.JSONDecodeError as e:
+                        logger.debug(f"Failed to parse metadata as JSON for chunk {row.get('id')}: {e}")
                         
                 # Ensure text is not too long for response
                 if len(row['text']) > 1000:
